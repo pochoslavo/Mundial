@@ -204,33 +204,35 @@
 
     <script>
         // --- DATOS MAESTROS DE PARTICIPANTES ---
+        // Se añade la propiedad 'rank' explícita para que no se pierda al filtrar con el buscador
         const participantesMaster = [
-            { name: 'He-van', y: 65, color: '#ffd700' },
-            { name: 'Padelera', y: 63, color: '#c0c0c0' },
-            { name: '7 Pulmones', y: 63, color: '#cd7f32' },
-            { name: 'Nacho', y: 62 }, { name: 'Sinver', y: 62 }, { name: 'Abejorro', y: 62 },
-            { name: 'Hugo Closs', y: 61 }, { name: 'La Runner', y: 60 }, { name: 'Baltiloco', y: 60 },
-            { name: 'Laucha', y: 60 }, { name: 'AENMB', y: 59 }, { name: 'Presidenta', y: 59 },
-            { name: 'Estrella de Navidad', y: 59 }, { name: 'Rene Puente', y: 58 }, { name: 'Renatin', y: 58 },
-            { name: 'De Guadalupe', y: 58 }, { name: 'La anguila', y: 58 }, { name: 'Barby', y: 58 },
-            { name: 'Mr. Cripto', y: 57 }, { name: 'Malo Pal Fifa', y: 57 }, { name: 'Liz Taylor', y: 55 },
-            { name: 'Psicoloco', y: 55 }, { name: 'Destructor', y: 54 }, { name: 'Colombia', y: 54 },
-            { name: 'Cesarin', y: 54 }, { name: 'Pionera', y: 53 }, { name: 'Campeon de C', y: 53 },
-            { name: 'Carlos Primero', y: 52 }, { name: 'Adrian y sus D', y: 52 }, { name: 'Avispa', y: 51 },
-            { name: 'Charles Black', y: 51 }, { name: 'Sr Longanizo', y: 50 }, { name: 'Danita', y: 49 },
-            { name: 'Jisus', y: 49 }, { name: 'Agosto', y: 49 }, { name: 'Flash Gordon', y: 48 },
-            { name: 'Castañon', y: 48 }, { name: 'Alexitrico', y: 48 }, { name: 'Margaritas', y: 47 },
-            { name: 'Pepe', y: 47 }, { name: 'Alfajorcito', y: 46 }, { name: 'Charles White', y: 42 },
-            { name: 'Gonzalo Winte', y: 41 }, { name: 'Mosquetona', y: 40 }, { name: 'La Roja', y: 38 },
-            { name: 'SurPasivo', y: 32, color: '#ef4444' },
-            { name: 'Manolo', y: 30, color: '#111827' }
+            { rank: 1, name: 'He-van', y: 65, color: '#ffd700' },
+            { rank: 2, name: 'Padelera', y: 63, color: '#c0c0c0' },
+            { rank: 3, name: '7 Pulmones', y: 63, color: '#cd7f32' },
+            { rank: 4, name: 'Nacho', y: 62 }, { rank: 5, name: 'Sinver', y: 62 }, { rank: 6, name: 'Abejorro', y: 62 },
+            { rank: 7, name: 'Hugo Closs', y: 61 }, { rank: 8, name: 'La Runner', y: 60 }, { rank: 9, name: 'Baltiloco', y: 60 },
+            { rank: 10, name: 'Laucha', y: 60 }, { rank: 11, name: 'AENMB', y: 59 }, { rank: 12, name: 'Presidenta', y: 59 },
+            { rank: 13, name: 'Estrella de Navidad', y: 59 }, { rank: 14, name: 'Rene Puente', y: 58 }, { rank: 15, name: 'Renatin', y: 58 },
+            { rank: 16, name: 'De Guadalupe', y: 58 }, { rank: 17, name: 'La anguila', y: 58 }, { rank: 18, name: 'Barby', y: 58 },
+            { rank: 19, name: 'Mr. Cripto', y: 57 }, { rank: 20, name: 'Malo Pal Fifa', y: 57 }, { rank: 21, name: 'Liz Taylor', y: 55 },
+            { rank: 22, name: 'Psicoloco', y: 55 }, { rank: 23, name: 'Destructor', y: 54 }, { rank: 24, name: 'Colombia', y: 54 },
+            { rank: 25, name: 'Cesarin', y: 54 }, { rank: 26, name: 'Pionera', y: 53 }, { rank: 27, name: 'Campeon de C', y: 53 },
+            { rank: 28, name: 'Carlos Primero', y: 52 }, { rank: 29, name: 'Adrian y sus D', y: 52 }, { rank: 30, name: 'Avispa', y: 51 },
+            { rank: 31, name: 'Charles Black', y: 51 }, { rank: 32, name: 'Sr Longanizo', y: 50 }, { rank: 33, name: 'Danita', y: 49 },
+            { rank: 34, name: 'Jisus', y: 49 }, { rank: 35, name: 'Agosto', y: 49 }, { rank: 36, name: 'Flash Gordon', y: 48 },
+            { rank: 37, name: 'Castañon', y: 48 }, { rank: 38, name: 'Alexitrico', y: 48 }, { rank: 39, name: 'Margaritas', y: 47 },
+            { rank: 40, name: 'Pepe', y: 47 }, { rank: 41, name: 'Alfajorcito', y: 46 }, { rank: 42, name: 'Charles White', y: 42 },
+            { rank: 43, name: 'Gonzalo Winte', y: 41 }, { rank: 44, name: 'Mosquetona', y: 40 }, { rank: 45, name: 'La Roja', y: 38 },
+            { rank: 46, name: 'SurPasivo', y: 32, color: '#ef4444' },
+            { rank: 47, name: 'Manolo', y: 30, color: '#111827' }
         ];
 
         // --- ENRUTADOR DEL LEADERBOARD ---
         let chartLeaderboard;
         
         function initLeaderboard(dataFiltrada) {
-            const categorias = dataFiltrada.map(p => p.name);
+            // Muestra dinámicamente las etiquetas del eje como: (Puesto) Nombre
+            const categorias = dataFiltrada.map(p => `(${p.rank}) ${p.name}`);
             const nuevaAltura = Math.max(dataFiltrada.length * 26, 200);
             document.getElementById('container-leaderboard').style.height = nuevaAltura + 'px';
 
