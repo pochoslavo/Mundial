@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Completo - Polla Mundial</title>
     
-    <!-- Librerías oficiales de Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -150,45 +149,41 @@
     <header>
         <h1>📊 Dashboard Oficial: Polla Mundial</h1>
         <div class="sub">Resultados, Posiciones Intermedias y Tendencias de Votos</div>
-        <div class="match-badge">📢 Última actualización: Marruecos Ganó</div>
+        <div class="match-badge">📢 Última actualización: Martes 30/06/2026 - Francia 3x0 Suecia</div>
     </header>
 
-    <!-- 1. PODIO COMPLETO EN CAPAS -->
     <div class="podio-capa">
-        <!-- Fila 1: Top 3 -->
         <div class="podio-fila-1">
             <div class="podio-card p2">
                 <div class="podio-puesto">2° Lugar 🥈</div>
-                <div class="podio-nombre">Padelera</div>
-                <div class="podio-puntos">63 pts</div>
+                <div class="podio-nombre">Hugo Closs</div>
+                <div class="podio-puntos">68 pts</div>
             </div>
             <div class="podio-card p1">
                 <div class="podio-puesto">👑 Líder Absoluto 🥇</div>
-                <div class="podio-nombre">He-van</div>
-                <div class="podio-puntos">65 pts</div>
+                <div class="podio-nombre">7 Pulmones</div>
+                <div class="podio-puntos">70 pts</div>
             </div>
             <div class="podio-card p3">
                 <div class="podio-puesto">3° Lugar 🥉</div>
-                <div class="podio-nombre">7 Pulmones</div>
-                <div class="podio-puntos">63 pts</div>
+                <div class="podio-nombre">Padelera</div>
+                <div class="podio-puntos">65 pts</div>
             </div>
         </div>
 
-        <!-- Fila 2: 4to y 5to -->
         <div class="podio-fila-2">
             <div class="podio-card p4">
                 <div class="podio-puesto">4° Lugar</div>
-                <div class="podio-nombre">Nacho</div>
-                <div class="podio-puntos" style="color:#8b5cf6;">62 pts</div>
+                <div class="podio-nombre">Barby</div>
+                <div class="podio-puntos" style="color:#8b5cf6;">65 pts</div>
             </div>
             <div class="podio-card p5">
                 <div class="podio-puesto">5° Lugar</div>
-                <div class="podio-nombre">Sinver</div>
-                <div class="podio-puntos" style="color:#8b5cf6;">62 pts</div>
+                <div class="podio-nombre">De Guadalupe</div>
+                <div class="podio-puntos" style="color:#8b5cf6;">65 pts</div>
             </div>
         </div>
 
-        <!-- Fila 3: Colistas -->
         <div class="podio-fila-3">
             <div class="podio-card c1">
                 <div class="podio-puesto">⚠️ Colista 1</div>
@@ -198,24 +193,21 @@
             <div class="podio-card c2">
                 <div class="podio-puesto">💀 Colista 2</div>
                 <div class="podio-nombre">Manolo</div>
-                <div class="podio-puntos">30 pts</div>
+                <div class="podio-puntos">32 pts</div>
             </div>
         </div>
     </div>
 
-    <!-- 2. BUSCADOR FILTRABLE -->
     <div class="search-wrapper">
         <input type="text" id="input-buscar" class="search-input" placeholder="🔍 Busca tu nombre para filtrar la tabla...">
     </div>
 
-    <!-- 3. TABLA GENERAL CON SCROLL -->
     <div class="leaderboard-wrapper">
         <div class="scroll-container">
             <div id="container-leaderboard" style="width: 100%; height: 1200px;"></div>
         </div>
     </div>
 
-    <!-- 4. SECCIÓN INFERIOR: TENDENCIAS DE VOTOS -->
     <div class="grid-graficos">
         <div id="container-campeon" class="grafico-card"></div>
         <div id="container-goleador" class="grafico-card"></div>
@@ -225,55 +217,55 @@
 
     <script>
         // --- DATOS MAESTROS DE PARTICIPANTES ---
-        // Actualizado según image_10c448.png
+        // Actualizado completamente según image_90d2bc.png
         const participantesMaster = [
-            { rank: 1, name: 'He-van', y: 65, color: '#ffd700' },
-            { rank: 2, name: 'Padelera', y: 63, color: '#c0c0c0' },
-            { rank: 3, name: '7 Pulmones', y: 63, color: '#cd7f32' },
-            { rank: 4, name: 'Nacho', y: 62, color: '#8b5cf6' },
-            { rank: 5, name: 'Sinver', y: 62, color: '#8b5cf6' },
-            { rank: 6, name: 'Abejorro', y: 62 },
-            { rank: 7, name: 'La Runner', y: 62 },
-            { rank: 8, name: 'Hugo Closs', y: 61 },
-            { rank: 9, name: 'AENMB', y: 61 },
-            { rank: 10, name: 'Baltiloco', y: 60 },
-            { rank: 11, name: 'Laucha', y: 60 },
-            { rank: 12, name: 'Presidenta', y: 59 },
-            { rank: 13, name: 'Estrella de Navidad', y: 59 },
-            { rank: 14, name: 'Rene Puente', y: 58 },
-            { rank: 15, name: 'Renatin', y: 58 },
-            { rank: 16, name: 'De Guadalupe', y: 58 },
-            { rank: 17, name: 'La anguila', y: 58 },
-            { rank: 18, name: 'Barby', y: 58 },
-            { rank: 19, name: 'Mr. Cripto', y: 57 },
-            { rank: 20, name: 'Malo Pal Fifa', y: 57 },
-            { rank: 21, name: 'Destructor', y: 56 },
-            { rank: 22, name: 'Liz Taylor', y: 55 },
-            { rank: 23, name: 'Psicoloco', y: 55 },
-            { rank: 24, name: 'Campeon de Cueca', y: 55 },
-            { rank: 25, name: 'Colombia', y: 54 },
-            { rank: 26, name: 'Cesarin', y: 54 },
-            { rank: 27, name: 'Pionera', y: 53 },
-            { rank: 28, name: 'Carlos Primero', y: 52 },
-            { rank: 29, name: 'Adrian y sus D', y: 52 },
-            { rank: 30, name: 'Avispa', y: 51 },
-            { rank: 31, name: 'Charles Black', y: 51 },
-            { rank: 32, name: 'Danita', y: 51 },
-            { rank: 33, name: 'Jisus', y: 51 },
-            { rank: 34, name: 'Agosto', y: 51 },
-            { rank: 35, name: 'Sr Longanizo', y: 50 },
-            { rank: 36, name: 'Flash Gordon', y: 48 },
-            { rank: 37, name: 'Castañon', y: 48 },
-            { rank: 38, name: 'Alexitrico', y: 48 },
-            { rank: 39, name: 'Margaritas', y: 47 },
-            { rank: 40, name: 'Pepe', y: 47 },
-            { rank: 41, name: 'Alfajorcito', y: 46 },
-            { rank: 42, name: 'Charles White', y: 42 },
-            { rank: 43, name: 'Gonzalo Winte', y: 41 },
-            { rank: 44, name: 'Mosquetona', y: 40 },
-            { rank: 45, name: 'La Roja', y: 40 },
+            { rank: 1, name: '7 Pulmones', y: 70, color: '#ffd700' },
+            { rank: 2, name: 'Hugo Closs', y: 68, color: '#c0c0c0' },
+            { rank: 3, name: 'Padelera', y: 65, color: '#cd7f32' },
+            { rank: 4, name: 'Barby', y: 65, color: '#8b5cf6' },
+            { rank: 5, name: 'De Guadalupe', y: 65, color: '#8b5cf6' },
+            { rank: 6, name: 'La anguila', y: 65 },
+            { rank: 7, name: 'La Runner', y: 64 },
+            { rank: 8, name: 'Malo Pal Fifa', y: 64 },
+            { rank: 9, name: 'He-van', y: 62 },
+            { rank: 10, name: 'Baltiloco', y: 62 },
+            { rank: 11, name: 'Laucha', y: 62 },
+            { rank: 12, name: 'Liz Taylor', y: 62 },
+            { rank: 13, name: 'Presidenta', y: 61 },
+            { rank: 14, name: 'Renatin', y: 60 },
+            { rank: 15, name: 'Pionera', y: 60 },
+            { rank: 16, name: 'Rene Puente', y: 60 },
+            { rank: 17, name: 'Nacho', y: 59 },
+            { rank: 18, name: 'Mr. Cripto', y: 59 },
+            { rank: 19, name: 'Sinver', y: 59 },
+            { rank: 20, name: 'Abejorro', y: 59 },
+            { rank: 21, name: 'Adrian y sus Dados', y: 59 },
+            { rank: 22, name: 'Carlos Primero', y: 59 },
+            { rank: 23, name: 'Destructor', y: 58 },
+            { rank: 24, name: 'AENMB', y: 58 },
+            { rank: 25, name: 'Psicoloco', y: 57 },
+            { rank: 26, name: 'Campeon de Cueca', y: 57 },
+            { rank: 27, name: 'Estrella de Navidad', y: 56 },
+            { rank: 28, name: 'Cesarin', y: 56 },
+            { rank: 29, name: 'Danita', y: 53 },
+            { rank: 30, name: 'Charles Black', y: 53 },
+            { rank: 31, name: 'Jisus', y: 53 },
+            { rank: 32, name: 'Alfajorcito', y: 53 },
+            { rank: 33, name: 'Colombia', y: 51 },
+            { rank: 34, name: 'Flash Gordon', y: 50 },
+            { rank: 35, name: 'Castañon', y: 50 },
+            { rank: 36, name: 'Alexitrico', y: 50 },
+            { rank: 37, name: 'Pepe', y: 49 },
+            { rank: 38, name: 'Avispa', y: 48 },
+            { rank: 39, name: 'Agosto', y: 48 },
+            { rank: 40, name: 'La Roja', y: 47 },
+            { rank: 41, name: 'Mosquetona', y: 47 },
+            { rank: 42, name: 'Sr Longanizo', y: 45 },
+            { rank: 43, name: 'Charles White', y: 44 },
+            { rank: 44, name: 'Gonzalo Winter', y: 43 },
+            { rank: 45, name: 'Margaritas', y: 42 },
             { rank: 46, name: 'SurPasivo', y: 34, color: '#ef4444' },
-            { rank: 47, name: 'Manolo', y: 30, color: '#111827' }
+            { rank: 47, name: 'Manolo', y: 32, color: '#111827' }
         ];
 
         // --- ENRUTADOR DEL LEADERBOARD ---
