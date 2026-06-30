@@ -163,3 +163,148 @@
                 <div class="podio-puesto">4° Lugar</div>
                 <div class="podio-nombre">Nacho</div>
                 <div class="podio-puntos" style="color:#3b82f6;">62 pts</div>
+            </div>
+            <div class="podio-card p5">
+                <div class="podio-puesto">5° Lugar</div>
+                <div class="podio-nombre">Sinver</div>
+                <div class="podio-puntos" style="color:#3b82f6;">62 pts</div>
+            </div>
+        </div>
+
+        <div class="podio-fila-3">
+            <div class="podio-card c1">
+                <div class="podio-puesto">⚠️ Colista 1</div>
+                <div class="podio-nombre">SurPasivo</div>
+                <div class="podio-puntos">32 pts</div>
+            </div>
+            <div class="podio-card c2">
+                <div class="podio-puesto">💀 Colista 2</div>
+                <div class="podio-nombre">Manolo</div>
+                <div class="podio-puntos">30 pts</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-wrapper">
+        <input type="text" id="input-buscar" class="search-input" placeholder="🔍 Busca tu nombre para filtrar la tabla...">
+    </div>
+
+    <div class="leaderboard-wrapper">
+        <div class="scroll-container">
+            <div id="container-leaderboard" style="width: 100%; height: 1200px;"></div>
+        </div>
+    </div>
+
+    <div class="grid-graficos">
+        <div id="container-campeon" class="grafico-card"></div>
+        <div id="container-goleador" class="grafico-card"></div>
+        <div id="container-tarjetas" class="grafico-card"></div>
+        <div id="container-goles" class="grafico-card"></div>
+    </div>
+
+    <script>
+        // --- DATOS MAESTROS DE PARTICIPANTES ---
+        const participantesMaster = [
+            { name: 'He-van', y: 65, color: '#ffd700' },
+            { name: 'Padelera', y: 63, color: '#c0c0c0' },
+            { name: '7 Pulmones', y: 63, color: '#cd7f32' },
+            { name: 'Nacho', y: 62 }, { name: 'Sinver', y: 62 }, { name: 'Abejorro', y: 62 },
+            { name: 'Hugo Closs', y: 61 }, { name: 'La Runner', y: 60 }, { name: 'Baltiloco', y: 60 },
+            { name: 'Laucha', y: 60 }, { name: 'AENMB', y: 59 }, { name: 'Presidenta', y: 59 },
+            { name: 'Estrella de Navidad', y: 59 }, { name: 'Rene Puente', y: 58 }, { name: 'Renatin', y: 58 },
+            { name: 'De Guadalupe', y: 58 }, { name: 'La anguila', y: 58 }, { name: 'Barby', y: 58 },
+            { name: 'Mr. Cripto', y: 57 }, { name: 'Malo Pal Fifa', y: 57 }, { name: 'Liz Taylor', y: 55 },
+            { name: 'Psicoloco', y: 55 }, { name: 'Destructor', y: 54 }, { name: 'Colombia', y: 54 },
+            { name: 'Cesarin', y: 54 }, { name: 'Pionera', y: 53 }, { name: 'Campeon de C', y: 53 },
+            { name: 'Carlos Primero', y: 52 }, { name: 'Adrian y sus D', y: 52 }, { name: 'Avispa', y: 51 },
+            { name: 'Charles Black', y: 51 }, { name: 'Sr Longanizo', y: 50 }, { name: 'Danita', y: 49 },
+            { name: 'Jisus', y: 49 }, { name: 'Agosto', y: 49 }, { name: 'Flash Gordon', y: 48 },
+            { name: 'Castañon', y: 48 }, { name: 'Alexitrico', y: 48 }, { name: 'Margaritas', y: 47 },
+            { name: 'Pepe', y: 47 }, { name: 'Alfajorcito', y: 46 }, { name: 'Charles White', y: 42 },
+            { name: 'Gonzalo Winte', y: 41 }, { name: 'Mosquetona', y: 40 }, { name: 'La Roja', y: 38 },
+            { name: 'SurPasivo', y: 32, color: '#ef4444' },
+            { name: 'Manolo', y: 30, color: '#111827' }
+        ];
+
+        // --- ENRUTADOR DEL LEADERBOARD ---
+        let chartLeaderboard;
+        
+        function initLeaderboard(dataFiltrada) {
+            const categorias = dataFiltrada.map(p => p.name);
+            const nuevaAltura = Math.max(dataFiltrada.length * 26, 200);
+            document.getElementById('container-leaderboard').style.height = nuevaAltura + 'px';
+
+            chartLeaderboard = Highcharts.chart('container-leaderboard', {
+                chart: { type: 'bar', backgroundColor: 'transparent' },
+                title: { text: 'Tabla General Completa', align: 'left', style: { fontWeight: 'bold' } },
+                xAxis: {
+                    categories: categorias,
+                    labels: { style: { fontWeight: 'bold' } }
+                },
+                yAxis: { min: 25, title: { text: 'Puntos Totales' } },
+                legend: { enabled: false },
+                credits: { enabled: false },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 4,
+                        defaultColor: '#3b82f6',
+                        dataLabels: { enabled: true, format: '{point.y} pts' }
+                    }
+                },
+                series: [{ name: 'Puntaje', data: dataFiltrada }]
+            });
+        }
+
+        // Carga inicial de la tabla
+        initLeaderboard(participantesMaster);
+
+        // Lógica del buscador reactivo
+        document.getElementById('input-buscar').addEventListener('input', function(e) {
+            const texto = e.target.value.toLowerCase().trim();
+            const filtrados = participantesMaster.filter(p => p.name.toLowerCase().includes(texto));
+            if (chartLeaderboard) chartLeaderboard.destroy();
+            initLeaderboard(filtrados);
+        });
+
+        // --- CONFIGURACIÓN DE LOS GRÁFICOS INFERIORES DE TENDENCIAS ---
+        const configGlobalExtras = {
+            credits: { enabled: false }, 
+            legend: { enabled: false },
+            yAxis: { title: { text: 'Votos' } }, 
+            chart: { style: { fontFamily: 'inherit' } },
+            plotOptions: {
+                bar: { borderRadius: 5, dataLabels: { enabled: true, format: '{point.y} v' } },
+                column: { borderRadius: 5, dataLabels: { enabled: true, format: '{point.y}' } }
+            }
+        };
+
+        // Gráfico 1: Campeón
+        Highcharts.chart('container-campeon', Highcharts.merge(configGlobalExtras, {
+            chart: { type: 'bar' }, title: { text: '🏆 Favoritos para ser Campeón', align: 'left' },
+            xAxis: { categories: ['Francia', 'España', 'Argentina', 'Portugal', 'Brasil', 'Países Bajos', 'Noruega'] },
+            series: [{ data: [19, 14, 6, 5, 4, 2, 1], color: '#3b82f6' }]
+        }));
+
+        // Gráfico 2: Goleador
+        Highcharts.chart('container-goleador', Highcharts.merge(configGlobalExtras, {
+            chart: { type: 'bar' }, title: { text: '⚽ País del Goleador', align: 'left' },
+            xAxis: { categories: ['Francia', 'Alemania', 'España', 'Argentina', 'Brasil', 'Inglaterra', 'Países Bajos', 'Portugal'] },
+            series: [{ data: [16, 14, 11, 5, 3, 2, 1, 1], color: '#10b981' }]
+        }));
+
+        // Gráfico 3: Tarjetas
+        Highcharts.chart('container-tarjetas', Highcharts.merge(configGlobalExtras, {
+            chart: { type: 'column' }, title: { text: '🟨 Equipo con Más Tarjetas', align: 'left' },
+            xAxis: { categories: ['Uruguay', 'Argentina', 'Paraguay', 'Brasil', 'España', 'Francia', 'Inglaterra', 'Marruecos', 'México', 'Turquía'] },
+            series: [{ data: [24, 13, 5, 4, 2, 1, 1, 1, 1, 1], color: '#f59e0b' }]
+        }));
+
+        // Gráfico 4: Más Goles
+        Highcharts.chart('container-goles', Highcharts.merge(configGlobalExtras, {
+            chart: { type: 'bar' }, title: { text: '🔥 Más Goles en un Solo Partido', align: 'left' },
+            xAxis: { categories: ['Alemania', 'Brasil', 'España', 'Argentina', 'Portugal', 'Inglaterra', 'Francia', 'Haití'] },
+            series: [{ data: [27, 10, 7, 3, 2, 1, 1, 1], color: '#ef4444' }]
+        }));
+    </script>
+</body>
+</html>
