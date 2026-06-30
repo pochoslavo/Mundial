@@ -22,7 +22,17 @@
             margin-bottom: 30px;
         }
         h1 { margin: 0; color: #111827; font-size: 2.2rem; font-weight: 800; }
-        p { color: #6b7280; margin-top: 5px; }
+        .sub { color: #6b7280; margin-top: 5px; font-size: 1.1rem; }
+        .match-badge { 
+            display: inline-block; 
+            background-color: #111827; 
+            color: #ffffff; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 0.95rem; 
+            font-weight: bold; 
+            margin-top: 8px; 
+        }
 
         /* --- Estilos del Podio Estructurado --- */
         .podio-capa { margin-bottom: 20px; }
@@ -59,8 +69,8 @@
         .p2 { height: 115px; border-top: 8px solid #c0c0c0; order: 1; }
         .p3 { height: 100px; border-top: 8px solid #cd7f32; order: 3; }
         
-        /* 4to y 5to */
-        .p4, .p5 { border-top: 5px solid #3b82f6; padding: 12px; }
+        /* 4to y 5to (Color Violeta Destacado) */
+        .p4, .p5 { border-top: 6px solid #8b5cf6; padding: 12px; }
         /* Colistas (Más pequeños) */
         .c1, .c2 { border-top: 5px solid #111827; padding: 8px; font-size: 0.9rem; background: #fafafa; }
 
@@ -138,7 +148,8 @@
 
     <header>
         <h1>📊 Dashboard Oficial: Polla Mundial</h1>
-        <p>Resultados, Posiciones Intermedias y Tendencias de Votos</p>
+        <div class="sub">Resultados, Posiciones Intermedias y Tendencias de Votos</div>
+        <div class="match-badge">📢 Última actualización: Paises Bajos 1 - 0 Marruecos</div>
     </header>
 
     <div class="podio-capa">
@@ -146,17 +157,17 @@
             <div class="podio-card p2">
                 <div class="podio-puesto">2° Lugar 🥈</div>
                 <div class="podio-nombre">Padelera</div>
-                <div class="podio-puntos">63 pts</div>
+                <div class="podio-puntos">65 pts</div>
             </div>
             <div class="podio-card p1">
                 <div class="podio-puesto">👑 Líder Absoluto 🥇</div>
                 <div class="podio-nombre">He-van</div>
-                <div class="podio-puntos">65 pts</div>
+                <div class="podio-puntos">67 pts</div>
             </div>
             <div class="podio-card p3">
                 <div class="podio-puesto">3° Lugar 🥉</div>
                 <div class="podio-nombre">7 Pulmones</div>
-                <div class="podio-puntos">63 pts</div>
+                <div class="podio-puntos">65 pts</div>
             </div>
         </div>
 
@@ -164,12 +175,12 @@
             <div class="podio-card p4">
                 <div class="podio-puesto">4° Lugar</div>
                 <div class="podio-nombre">Nacho</div>
-                <div class="podio-puntos" style="color:#3b82f6;">62 pts</div>
+                <div class="podio-puntos" style="color:#8b5cf6;">64 pts</div>
             </div>
             <div class="podio-card p5">
                 <div class="podio-puesto">5° Lugar</div>
                 <div class="podio-nombre">Sinver</div>
-                <div class="podio-puntos" style="color:#3b82f6;">62 pts</div>
+                <div class="podio-puntos" style="color:#8b5cf6;">64 pts</div>
             </div>
         </div>
 
@@ -182,7 +193,7 @@
             <div class="podio-card c2">
                 <div class="podio-puesto">💀 Colista 2</div>
                 <div class="podio-nombre">Manolo</div>
-                <div class="podio-puntos">30 pts</div>
+                <div class="podio-puntos">32 pts</div>
             </div>
         </div>
     </div>
@@ -207,25 +218,53 @@
     <script>
         // --- DATOS MAESTROS DE PARTICIPANTES ---
         const participantesMaster = [
-            { rank: 1, name: 'He-van', y: 65, color: '#ffd700' },
-            { rank: 2, name: 'Padelera', y: 63, color: '#c0c0c0' },
-            { rank: 3, name: '7 Pulmones', y: 63, color: '#cd7f32' },
-            { rank: 4, name: 'Nacho', y: 62 }, { rank: 5, name: 'Sinver', y: 62 }, { rank: 6, name: 'Abejorro', y: 62 },
-            { rank: 7, name: 'Hugo Closs', y: 61 }, { rank: 8, name: 'La Runner', y: 60 }, { rank: 9, name: 'Baltiloco', y: 60 },
-            { rank: 10, name: 'Laucha', y: 60 }, { rank: 11, name: 'AENMB', y: 59 }, { rank: 12, name: 'Presidenta', y: 59 },
-            { rank: 13, name: 'Estrella de Navidad', y: 59 }, { rank: 14, name: 'Rene Puente', y: 58 }, { rank: 15, name: 'Renatin', y: 58 },
-            { rank: 16, name: 'De Guadalupe', y: 58 }, { rank: 17, name: 'La anguila', y: 58 }, { rank: 18, name: 'Barby', y: 58 },
-            { rank: 19, name: 'Mr. Cripto', y: 57 }, { rank: 20, name: 'Malo Pal Fifa', y: 57 }, { rank: 21, name: 'Liz Taylor', y: 55 },
-            { rank: 22, name: 'Psicoloco', y: 55 }, { rank: 23, name: 'Destructor', y: 54 }, { rank: 24, name: 'Colombia', y: 54 },
-            { rank: 25, name: 'Cesarin', y: 54 }, { rank: 26, name: 'Pionera', y: 53 }, { rank: 27, name: 'Campeon de C', y: 53 },
-            { rank: 28, name: 'Carlos Primero', y: 52 }, { rank: 29, name: 'Adrian y sus D', y: 52 }, { rank: 30, name: 'Avispa', y: 51 },
-            { rank: 31, name: 'Charles Black', y: 51 }, { rank: 32, name: 'Sr Longanizo', y: 50 }, { rank: 33, name: 'Danita', y: 49 },
-            { rank: 34, name: 'Jisus', y: 49 }, { rank: 35, name: 'Agosto', y: 49 }, { rank: 36, name: 'Flash Gordon', y: 48 },
-            { rank: 37, name: 'Castañon', y: 48 }, { rank: 38, name: 'Alexitrico', y: 48 }, { rank: 39, name: 'Margaritas', y: 47 },
-            { rank: 40, name: 'Pepe', y: 47 }, { rank: 41, name: 'Alfajorcito', y: 46 }, { rank: 42, name: 'Charles White', y: 42 },
-            { rank: 43, name: 'Gonzalo Winte', y: 41 }, { rank: 44, name: 'Mosquetona', y: 40 }, { rank: 45, name: 'La Roja', y: 38 },
+            { rank: 1, name: 'He-van', y: 67, color: '#ffd700' },
+            { rank: 2, name: 'Padelera', y: 65, color: '#c0c0c0' },
+            { rank: 3, name: '7 Pulmones', y: 65, color: '#cd7f32' },
+            { rank: 4, name: 'Nacho', y: 64, color: '#8b5cf6' }, 
+            { rank: 5, name: 'Sinver', y: 64, color: '#8b5cf6' }, 
+            { rank: 6, name: 'Abejorro', y: 64 },
+            { rank: 7, name: 'Hugo Closs', y: 63 }, 
+            { rank: 8, name: 'Baltiloco', y: 62 }, 
+            { rank: 9, name: 'Laucha', y: 62 },
+            { rank: 10, name: 'Presidenta', y: 61 }, 
+            { rank: 11, name: 'Estrella de Navidad', y: 61 }, 
+            { rank: 12, name: 'La Runner', y: 60 }, 
+            { rank: 13, name: 'Rene Puente', y: 60 }, 
+            { rank: 14, name: 'Renatin', y: 60 }, 
+            { rank: 15, name: 'De Guadalupe', y: 60 }, 
+            { rank: 16, name: 'La anguila', y: 60 }, 
+            { rank: 17, name: 'Barby', y: 60 }, 
+            { rank: 18, name: 'AENMB', y: 59 }, 
+            { rank: 19, name: 'Mr. Cripto', y: 59 }, 
+            { rank: 20, name: 'Malo Pal Fifa', y: 59 }, 
+            { rank: 21, name: 'Liz Taylor', y: 57 },
+            { rank: 22, name: 'Psicoloco', y: 57 }, 
+            { rank: 23, name: 'Colombia', y: 56 }, 
+            { rank: 24, name: 'Cesarin', y: 56 }, 
+            { rank: 25, name: 'Pionera', y: 55 }, 
+            { rank: 26, name: 'Destructor', y: 54 }, 
+            { rank: 27, name: 'Carlos Primero', y: 54 }, 
+            { rank: 28, name: 'Adrian y sus D', y: 54 }, 
+            { rank: 29, name: 'Campeon de C', y: 53 }, 
+            { rank: 30, name: 'Avispa', y: 53 },
+            { rank: 31, name: 'Charles Black', y: 53 }, 
+            { rank: 32, name: 'Sr Longanizo', y: 50 }, 
+            { rank: 33, name: 'Flash Gordon', y: 50 }, 
+            { rank: 34, name: 'Castañon', y: 50 }, 
+            { rank: 35, name: 'Alexitrico', y: 50 }, 
+            { rank: 36, name: 'Danita', y: 49 }, 
+            { rank: 37, name: 'Jisus', y: 49 }, 
+            { rank: 38, name: 'Agosto', y: 49 }, 
+            { rank: 39, name: 'Margaritas', y: 49 },
+            { rank: 40, name: 'Pepe', y: 49 }, 
+            { rank: 41, name: 'Alfajorcito', y: 48 }, 
+            { rank: 42, name: 'Charles White', y: 44 },
+            { rank: 43, name: 'Gonzalo Winte', y: 43 }, 
+            { rank: 44, name: 'Mosquetona', y: 42 }, 
+            { rank: 45, name: 'La Roja', y: 38 },
             { rank: 46, name: 'SurPasivo', y: 32, color: '#ef4444' },
-            { rank: 47, name: 'Manolo', y: 30, color: '#111827' }
+            { rank: 47, name: 'Manolo', y: 32, color: '#111827' }
         ];
 
         // --- ENRUTADOR DEL LEADERBOARD ---
@@ -240,14 +279,14 @@
                 chart: { 
                     type: 'bar', 
                     backgroundColor: 'transparent',
-                    marginLeft: 130 // Margen amplio para que los nombres largos no se recorten en celulares
+                    marginLeft: 130
                 },
                 title: { text: 'Tabla General Completa', align: 'left', style: { fontWeight: 'bold' } },
                 xAxis: {
                     categories: categorias,
                     labels: { 
                         style: { fontWeight: 'bold', fontSize: '11px' },
-                        step: 1 // Fuerza a que aparezcan absolutamente todos los nombres en orden
+                        step: 1
                     }
                 },
                 yAxis: { min: 25, title: { text: 'Puntos Totales' } },
