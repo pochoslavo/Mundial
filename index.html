@@ -57,9 +57,180 @@
     </style>
 </head>
 <body>
+<!-- Copiar dentro del body de tu HTML -->
+
+<style>
+    /* Estilos para el Podio Destacado */
+    .podio-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 15px;
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 10px;
+    }
+    .podio-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        padding: 20px;
+        text-align: center;
+        flex: 1;
+        transition: transform 0.2s;
+    }
+    .podio-card:hover { transform: translateY(-5px); }
+    .p1 { height: 160px; border-top: 8px solid #ffd700; order: 2; }
+    .p2 { height: 130px; border-top: 8px solid #c0c0c0; order: 1; }
+    .p3 { height: 110px; border-top: 8px solid #cd7f32; order: 3; }
+    
+    .podio-puesto { font-size: 0.85rem; font-weight: bold; color: #666; text-transform: uppercase; }
+    .podio-nombre { font-size: 1.2rem; font-weight: bold; margin: 10px 0 5px 0; color: #111827; }
+    .podio-puntos { font-size: 1.4rem; font-weight: 800; color: #3b82f6; }
+
+    /* Estilo para las menciones especiales inferiores */
+    .menciones-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        max-width: 900px;
+        margin: 0 auto 40px auto;
+    }
+    .mencion-card {
+        background: #fff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        flex: 1;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+    .mencion-titulo { font-size: 0.8rem; color: #888; font-weight: bold; }
+
+    /* Contenedor del gráfico largo con scroll */
+    .leaderboard-wrapper {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .scroll-container {
+        max-height: 500px; /* Controla la altura del scroll */
+        overflow-y: auto;
+    }
+</style>
+
+<!-- SECTION 1: EL PODIO VISUAL -->
+<div class="podio-container">
+    <div class="podio-card p2">
+        <div class="podio-puesto">2° Lugar 🥈</div>
+        <div class="podio-nombre">Padelera</div>
+        <div class="podio-puntos">63 pts</div>
+    </div>
+    <div class="podio-card p1">
+        <div class="podio-puesto">👑 Líder Absoluto 🥇</div>
+        <div class="podio-nombre">He-van</div>
+        <div class="podio-puntos">65 pts</div>
+    </div>
+    <div class="podio-card p3">
+        <div class="podio-puesto">3° Lugar 🥉</div>
+        <div class="podio-nombre">7 Pulmones</div>
+        <div class="podio-puntos">63 pts</div>
+    </div>
+</div>
+
+<div class="menciones-container">
+    <div class="mencion-card" style="border-left: 4px solid #3b82f6;">
+        <span class="mencion-titulo">4° Nacho</span><br><b>62 pts</b>
+    </div>
+    <div class="mencion-card" style="border-left: 4px solid #3b82f6;">
+        <span class="mencion-titulo">5° Sinver</span><br><b>62 pts</b>
+    </div>
+    <div class="mencion-card" style="border-left: 4px solid #ef4444;">
+        <span class="mencion-titulo">Penúltimo: SurPasivo</span><br><b>32 pts</b>
+    </div>
+    <div class="mencion-card" style="border-left: 4px solid #111827;">
+        <span class="mencion-titulo">Colista 🧟‍♂️: Manolo</span><br><b>30 pts</b>
+    </div>
+</div>
+
+<!-- SECTION 2: GRÁFICO INTERACTIVO COMPLETO -->
+<div class="leaderboard-wrapper">
+    <div class="scroll-container">
+        <!-- Le damos una altura grande interna al div para que entren los 47 sin amontonarse -->
+        <div id="container-leaderboard" style="width: 100%; height: 1200px;"></div>
+    </div>
+</div>
+
+<script>
+    // Arreglo completo con los 47 participantes de tu imagen ordenados por puntaje
+    const participantesData = [
+        { name: 'He-van', y: 65, color: '#ffd700' }, // Oro
+        { name: 'Padelera', y: 63, color: '#c0c0c0' }, // Plata
+        { name: '7 Pulmones', y: 63, color: '#cd7f32' }, // Bronce
+        { name: 'Nacho', y: 62 }, { name: 'Sinver', y: 62 }, { name: 'Abejorro', y: 62 },
+        { name: 'Hugo Closs', y: 61 }, { name: 'La Runner', y: 60 }, { name: 'Baltiloco', y: 60 },
+        { name: 'Laucha', y: 60 }, { name: 'AENMB', y: 59 }, { name: 'Presidenta', y: 59 },
+        { name: 'Estrella de Navidad', y: 59 }, { name: 'Rene Puente', y: 58 }, { name: 'Renatin', y: 58 },
+        { name: 'De Guadalupe', y: 58 }, { name: 'La anguila', y: 58 }, { name: 'Barby', y: 58 },
+        { name: 'Mr. Cripto', y: 57 }, { name: 'Malo Pal Fifa', y: 57 }, { name: 'Liz Taylor', y: 55 },
+        { name: 'Psicoloco', y: 55 }, { name: 'Destructor', y: 54 }, { name: 'Colombia', y: 54 },
+        { name: 'Cesarin', y: 54 }, { name: 'Pionera', y: 53 }, { name: 'Campeon de C', y: 53 },
+        { name: 'Carlos Primero', y: 52 }, { name: 'Adrian y sus D', y: 52 }, { name: 'Avispa', y: 51 },
+        { name: 'Charles Black', y: 51 }, { name: 'Sr Longanizo', y: 50 }, { name: 'Danita', y: 49 },
+        { name: 'Jisus', y: 49 }, { name: 'Agosto', y: 49 }, { name: 'Flash Gordon', y: 48 },
+        { name: 'Castañon', y: 48 }, { name: 'Alexitrico', y: 48 }, { name: 'Margaritas', y: 47 },
+        { name: 'Pepe', y: 47 }, { name: 'Alfajorcito', y: 46 }, { name: 'Charles White', y: 42 },
+        { name: 'Gonzalo Winte', y: 41 }, { name: 'Mosquetona', y: 40 }, { name: 'La Roja', y: 38 },
+        { name: 'SurPasivo', y: 32, color: '#ef4444' }, // Alerta abajo
+        { name: 'Manolo', y: 30, color: '#111827' }  // Farolito rojo
+    ];
+
+    // Extraer nombres para el eje X
+    const categoriasNombres = participantesData.map(p => p.name);
+
+    Highcharts.chart('container-leaderboard', {
+        chart: { type: 'bar', backgroundColor: 'transparent' },
+        title: { text: 'Tabla General Completa', align: 'left', style: { fontWeight: 'bold' } },
+        subtitle: { text: 'Desplázate hacia abajo para ver las posiciones inferiores' },
+        xAxis: {
+            categories: categoriasNombres,
+            gridLineWidth: 0,
+            labels: { style: { fontWeight: 'bold' } }
+        },
+        yAxis: {
+            min: 25, // Empezamos un poco más abajo del último para dar perspectiva
+            title: { text: 'Puntos Totales acumulados' }
+        },
+        legend: { enabled: false },
+        credits: { enabled: false },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                colorByPoint: false, // Permite respetar los colores custom que seteamos arriba
+                defaultColor: '#3b82f6', // Color azul estándar para la clase media de la tabla
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y} pts',
+                    style: { fontSize: '11px' }
+                }
+            }
+        },
+        series: [{
+            name: 'Puntaje',
+            data: participantesData
+        }]
+    });
+</script>
+
+
+    
 
     <header>
-        <h1>📊 Dashboard de Tendencias: Polla Mundial</h1>
+        <h1> Dashboard de Tendencias: Polla Mundialera</h1>
+        <p>Análisis visual de los favoritos de los participantes (Datos Actualizados)</p>
         <p>Análisis visual de los favoritos de los participantes (Datos Actualizados)</p>
     </header>
 
