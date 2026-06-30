@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - Polla Mundial</title>
+    
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            color: #1a2a3a;
+            font-size: 2.2rem;
+        }
+        p {
+            color: #666;
+            margin-top: 5px;
+        }
+        .grid-graficos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .grafico-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 400px;
+        }
+        @media (max-width: 500px) {
+            .grid-graficos {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📊 Estadísticas de Nuestra Polla Deportiva</h1>
+        <p>Análisis de tendencias y favoritos según las predicciones de los participantes</p>
+    </header>
+
+    <div class="grid-graficos">
+        <div id="container-campeon" class="grafico-card"></div>
+        <div id="container-goleador" class="grafico-card"></div>
+        <div id="container-tarjetas" class="grafico-card"></div>
+        <div id="container-goles" class="grafico-card"></div>
+    </div>
+
+    <script>
+        // Configuración común para las etiquetas de datos (Muestra: País afuera, Votos (Porcentaje%) adentro)
+        const commonPlotOptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: [
+                    {
+                        format: '<b>{point.name}</b>',
+                        connectorColor: 'var(--highcharts-neutral-color-80, #333)'
+                    },
+                    {
+                        format: '{point.y} ({point.percentage:.0f}%)',
+                        backgroundColor: 'contrast',
+                        distance: -30,
+                        style: {
+                            fontSize: '0.9em',
+                            textOutline: 'none'
+                        }
+                    }
+                ]
+            }
+        };
+
+        const commonTooltip = {
+            pointFormat: '{series.name}: <b>{point.y} votos</b> ({point.percentage:.1f}%)'
+        };
+
+        // 1. Gráfico: Campeón
+        Highcharts.chart('container-campeon', {
+            chart: { type: 'pie' },
+            title: { text: '¿Quién será el Campeón?', align: 'left' },
+            tooltip: commonTooltip,
+            plotOptions: commonPlotOptions,
+            series: [{
+                name: 'Votos',
+                colorByPoint: true,
+                data: [
+                    { name: 'Francia', y: 19, sliced: true, selected: true },
+                    { name: 'España', y: 14 },
+                    { name: 'Argentina', y: 7 },
+                    { name: 'Portugal', y: 5 },
+                    { name: 'Brasil', y: 4 },
+                    { name: 'Países Bajos', y: 2 },
+                    { name: 'Noruega', y: 1 }
+                ]
+            }]
+        });
+
+        // 2. Gráfico: País del Goleador
+        Highcharts.chart('container-goleador', {
+            chart: { type: 'pie' },
+            title:
