@@ -56,7 +56,7 @@
 <body>
 
     <header>
-        <h1>📊 Estadísticas de Nuestra Polla Deportiva</h1>
+        <h1> Estadísticas Polla Deportiva No Apuestas. Solo amistad</h1>
         <p>Análisis de tendencias y favoritos según las predicciones de los participantes</p>
     </header>
 
@@ -119,4 +119,70 @@
         // 2. Gráfico: País del Goleador
         Highcharts.chart('container-goleador', {
             chart: { type: 'pie' },
-            title:
+            title: { text: 'País del Goleador del Torneo', align: 'left' },
+            tooltip: commonTooltip,
+            plotOptions: commonPlotOptions,
+            series: [{
+                name: 'Votos',
+                colorByPoint: true,
+                data: [
+                    { name: 'Francia', y: 16, sliced: true, selected: true },
+                    { name: 'Alemania', y: 14 },
+                    { name: 'España', y: 11 },
+                    { name: 'Argentina', y: 5 },
+                    { name: 'Brasil', y: 3 },
+                    { name: 'Inglaterra', y: 2 },
+                    { name: 'Países Bajos', y: 1 },
+                    { name: 'Portugal', y: 1 }
+                ]
+            }]
+        });
+
+        // 3. Gráfico: Más Tarjetas
+        Highcharts.chart('container-tarjetas', {
+            chart: { type: 'pie' },
+            title: { text: 'Equipo con Más Tarjetas Recibidas', align: 'left' },
+            tooltip: commonTooltip,
+            plotOptions: commonPlotOptions,
+            series: [{
+                name: 'Votos',
+                colorByPoint: true,
+                data: [
+                    { name: 'Uruguay', y: 24, sliced: true, selected: true },
+                    { name: 'Argentina', y: 13 },
+                    { name: 'Paraguay', y: 5 },
+                    { name: 'Brasil', y: 4 },
+                    { name: 'España', y: 2 },
+                    { name: 'Francia', y: 1 },
+                    { name: 'Inglaterra', y: 1 },
+                    { name: 'Marruecos', y: 1 },
+                    { name: 'México', y: 1 },
+                    { name: 'Turquía', y: 1 }
+                ]
+            }]
+        });
+
+        // 4. Gráfico: Más Goles en un Partido
+        Highcharts.chart('container-goles', {
+            chart: { type: 'pie' },
+            title: { text: 'Equipo con Más Goles en un Solo Partido', align: 'left' },
+            tooltip: commonTooltip,
+            plotOptions: commonPlotOptions,
+            series: [{
+                name: 'Votos',
+                colorByPoint: true,
+                data: [
+                    { name: 'Alemania', y: 27, sliced: true, selected: true },
+                    { name: 'Brasil', y: 10 },
+                    { name: 'España', y: 7 },
+                    { name: 'Argentina', y: 3 },
+                    { name: 'Portugal', y: 2 },
+                    { name: 'Inglaterra', y: 1 },
+                    { name: 'Francia', y: 1 },
+                    { name: 'Haití', y: 1 }
+                ]
+            }]
+        });
+    </script>
+</body>
+</html>
